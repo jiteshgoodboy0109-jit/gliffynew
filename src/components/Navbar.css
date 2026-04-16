@@ -1,0 +1,143 @@
+.navbar {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 4rem; /* Wide padding for "corner" feel */
+}
+
+@media (max-width: 1200px) {
+  .nav-content {
+    padding: 0 2rem;
+  }
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-logo {
+  height: 60px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.company-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-signup {
+  padding: 0.6rem 1.5rem;
+  background: var(--foreground);
+  color: white;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+.btn-signup:hover {
+  background: #333;
+}
+
+.mobile-menu-btn {
+  display: none;
+  color: var(--primary);
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 2rem; /* Reduced for closer edge feel */
+}
+
+.nav-menu-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+@media (max-width: 968px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-menu-wrapper {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-150%);
+    transition: var(--transition);
+    z-index: 999;
+    align-items: flex-start;
+  }
+
+  .nav-menu-wrapper.open {
+    transform: translateY(0);
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .nav-actions {
+    width: 100%;
+  }
+
+  .nav-actions .btn-signup {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+}
