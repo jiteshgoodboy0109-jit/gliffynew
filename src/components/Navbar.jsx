@@ -40,6 +40,7 @@ const Navbar = () => {
           <ul className="nav-links">
             <li><NavLink to="/" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
             <li><NavLink to="/services" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Services</NavLink></li>
+            <li><NavLink to="/about" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink></li>
             <li><NavLink to="/Couples" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}><b className='text-purple-500' style={{ color: "#ff0000ff" }} >Couples</b></NavLink></li>
           </ul>
 

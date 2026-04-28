@@ -3,6 +3,14 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import './Contact.css';
 
+const Instagram = ({ size = 24, ...props }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+
 const Contact = () => {
   return (
     <div className="contact-page">
@@ -22,7 +30,7 @@ const Contact = () => {
                 <div className="info-icon"><Mail size={24} /></div>
                 <div>
                   <h4>Email Us</h4>
-                  <a href="mailto:gliffyxstdio@gmail.com" className="contact-link">gliffyxstdio@gmail.com</a>
+                  <a href="mailto:gliffyx.studio@gmail.com" className="contact-link">gliffyx.studio@gmail.com</a>
                 </div>
               </div>
               <div className="info-item">
@@ -33,7 +41,7 @@ const Contact = () => {
                 </div>
               </div>
               <div className="info-item">
-                <div className="info-icon"><MapPin size={24} /></div>
+                <div className="info-icon"><Instagram size={24} /></div>
                 <div>
                   <h4>Instagram</h4>
                   <a href="https://www.instagram.com/gliffyxstudio/" target="_blank" rel="noopener noreferrer" className="contact-link">@gliffyxstudio</a>
@@ -54,12 +62,14 @@ const Contact = () => {
                 <input type="text" placeholder="John Doe" required />
               </div>
               <div className="form-group">
-                <label>Email Address</label>
-                <input type="email" placeholder="john@example.com" required />
-              </div>
-              <div className="form-group">
                 <label>Project Subject</label>
-                <input type="text" placeholder="Web Design" required />
+                <select required className="contact-dropdown">
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="webdesign">Web Design</option>
+                  <option value="seo">SEO</option>
+                  <option value="couple site">Couple Site</option>
+                  <option value="happy feedback">Happy Feedback</option>
+                </select>
               </div>
               <div className="form-group">
                 <label>Message</label>

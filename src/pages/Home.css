@@ -168,8 +168,9 @@
 @media (max-width: 768px) {
   .hero {
     height: auto;
-    padding: 2rem 0 0;
-    overflow: hidden;
+    padding: 0;
+    margin-top: 80px; /* Reduced space */
+    background: var(--hero-bg);
   }
 
   .hero::before {
@@ -177,19 +178,19 @@
   }
 
   .hero-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 0 1.5rem;
+    height: auto;
+    flex-direction: column;
+    padding: 60px 1.5rem 0;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0;
   }
 
   .hero-content {
     position: static;
     transform: none;
     width: 100%;
-    padding: 2rem 1.5rem;
-    order: 1;
+    margin-bottom: 30px;
+    z-index: 10;
   }
 
   .hero-content h1 {
@@ -199,59 +200,53 @@
 
   .hero-content p {
     font-size: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .hero-image {
     order: 2;
+    display: flex;
     justify-content: center;
-    height: 220px;
-    padding-left: 0;
+    align-items: flex-end;
+    width: 100%;
+    height: 300px;
+    position: relative;
+    overflow: visible;
   }
 
   .hero-image img {
-    height: 200px;
-    margin-left: 0;
-  }
-
-  .search-bar {
-    flex-direction: column;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 16px;
-    padding: 0.5rem;
-    gap: 0.5rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  }
-
-  .search-input-wrapper {
-    padding: 0.5rem 1rem;
-    width: 100%;
-  }
-
-  .btn-search {
-    width: 100%;
-    text-align: center;
-    border-radius: 12px;
-    margin: 0;
+    height: 350px;
+    width: auto;
+    position: relative;
+    bottom: 0;
+    left: auto;
+    transform: none;
+    display: block;
+    margin: 0 auto;
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
+  .hero-container {
+    padding-top: 40px;
+  }
+
   .hero-content h1 {
     font-size: 2.2rem;
     letter-spacing: -1px;
   }
 
-  .hero-content p {
-    font-size: 0.95rem;
+  .hero-image {
+    height: 280px;
   }
 
   .hero-image img {
-    height: 170px;
+    height: 330px;
   }
 }
+
+
 
 /* PROCESS SECTION */
 .process-section {

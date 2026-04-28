@@ -46,7 +46,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              “Bring Your . <br /> Vision Online.”
+              “Bring Your . <br /> Vision <span className="shine-text">Online</span>.”
             </motion.h1>
 
             <motion.p

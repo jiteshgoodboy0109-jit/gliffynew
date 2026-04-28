@@ -1,0 +1,436 @@
+/* ══════════════════════════════════════════════════
+   ABOUT PAGE — Gliffy.X Studio
+   Clean editorial, 5-section minimal design
+══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap');
+
+.about-page {
+  font-family: 'Outfit', sans-serif;
+  background: #f6f5f3;
+  color: #111;
+  overflow-x: hidden;
+}
+
+/* ── 1. HERO ─────────────────────────────────────── */
+.a-hero {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  background: #0e0910;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle ambient glow */
+.a-hero::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(154, 77, 154, 0.18) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.a-hero-line {
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #f5f0ff;
+  margin: 0 0 3.5rem;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.a-hero-rule {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #9a4d9a, #cc66cc);
+  border-radius: 2px;
+  transform-origin: left center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 2. WHO WE ARE ────────────────────────────────── */
+.a-who {
+  padding: 8rem 2rem;
+  background: #f6f5f3;
+}
+
+.a-who-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.a-who-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border-right: 1px solid #e0ddd8;
+  padding-right: 6rem;
+}
+
+.a-who-num {
+  font-size: clamp(6rem, 14vw, 11rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #9a4d9a;
+  display: block;
+}
+
+.a-who-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 500;
+}
+
+.a-who-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.a-pillar {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 300;
+  color: #222;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.a-pillar-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: #9a4d9a;
+  margin-top: 0.55em;
+}
+
+/* ── 3. WHAT WE DO ────────────────────────────── */
+.a-services {
+  padding: 8rem 2rem;
+  background: #0e0910;
+}
+
+.a-services-header {
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+}
+
+.a-section-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201, 133, 201, 0.8);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.a-services-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  color: #f0eaf8;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin: 1rem 0 0;
+}
+
+/* Bento Grid Redesign - Asymmetric & Attractive */
+.a-bento-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  auto-rows: minmax(320px, auto);
+}
+
+/* Base Card with Glassmorphism & Depth */
+.a-bento-card {
+  background: linear-gradient(145deg, rgba(25, 15, 25, 0.6) 0%, rgba(10, 5, 15, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  backdrop-filter: blur(10px);
+}
+
+/* Hover effects & transformations */
+.a-bento-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(154, 77, 154, 0.4);
+  box-shadow: 0 30px 60px rgba(154, 77, 154, 0.15);
+}
+
+/* Abstract Glowing orb inside cards */
+.a-bento-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at center, rgba(154, 77, 154, 0.15) 0%, transparent 40%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.6s ease, transform 0.8s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.a-bento-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Asymmetric Span Rules */
+.a-bento-large {
+  grid-column: span 2;
+}
+.a-bento-card:not(.a-bento-large) {
+  grid-column: span 1;
+}
+
+/* Content needs keeping above the glowing orb */
+.a-bento-top, .a-bento-content, .a-bento-arrow {
+  position: relative;
+  z-index: 2;
+}
+
+.a-bento-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Icon Design */
+.a-bento-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(154, 77, 154, 0.2), rgba(154, 77, 154, 0.05));
+  border: 1px solid rgba(154, 77, 154, 0.3);
+  color: #d199d1;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+}
+
+.a-bento-card:hover .a-bento-icon {
+  background: linear-gradient(135deg, rgba(154, 77, 154, 0.4), rgba(154, 77, 154, 0.1));
+  color: #fff;
+  transform: scale(1.1) rotate(5deg);
+  border-color: rgba(201, 133, 201, 0.6);
+}
+
+.a-bento-num {
+  font-size: 1rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.15);
+  font-family: monospace;
+}
+
+.a-bento-name {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.a-bento-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 90%;
+}
+
+.a-bento-arrow {
+  margin-top: auto;
+  align-self: flex-end;
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.a-bento-card:hover .a-bento-arrow {
+  color: #fff;
+  background: rgba(154, 77, 154, 0.8);
+  transform: scale(1.15) rotate(-45deg);
+  box-shadow: 0 5px 15px rgba(154, 77, 154, 0.4);
+}
+
+/* ── 4. MISSION & VISION ─────────────────────────── */
+.a-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 0;
+  padding: 7rem 2rem;
+}
+
+.a-pillar-card {
+  padding: 4rem;
+  background: #0e0910;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  position: relative;
+}
+
+.a-pillar-card:first-child {
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.a-card-icon {
+  color: #9a4d9a;
+}
+
+.a-pillar-card h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0;
+}
+
+.a-pillar-card p {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 300;
+  color: #e8e2f0;
+  line-height: 1.55;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ── 5. CLOSING ──────────────────────────────────── */
+.a-closing {
+  padding: 5rem 2rem 6rem;
+  text-align: center;
+  background: #f6f5f3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.a-quote {
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: #333;
+  margin: 0;
+  max-width: 700px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.a-closing-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9a4d9a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+  transition: gap 0.3s ease, opacity 0.3s ease;
+}
+
+.a-closing-link:hover {
+  gap: 1rem;
+  opacity: 0.75;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 900px) {
+  .a-who-inner {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .a-who-left {
+    border-right: none;
+    border-bottom: 1px solid #e0ddd8;
+    padding-right: 0;
+    padding-bottom: 3rem;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .a-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .a-bento-large, .a-bento-card:not(.a-bento-large) {
+    grid-column: span 1;
+  }
+
+  .a-pillars {
+    grid-template-columns: 1fr;
+    padding: 5rem 2rem 5rem;
+  }
+
+  .a-pillar-card:first-child {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+}
+
+@media (max-width: 640px) {
+  .a-hero {
+    padding: 7rem 1.5rem 3rem;
+  }
+
+  .a-closing {
+    padding: 3.5rem 1.5rem 4rem;
+  }
+
+  .a-pillar-card {
+    padding: 3rem 1.5rem;
+  }
+
+  .a-bento-grid {
+    grid-template-columns: 1fr;
+  }
+}

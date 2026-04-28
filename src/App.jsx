@@ -6,13 +6,13 @@ import Home from './pages/Home';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import './App.css';
-
 import SmoothScroll from './components/SmoothScroll';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <SmoothScroll>
         <div className="App">
           <Navbar />

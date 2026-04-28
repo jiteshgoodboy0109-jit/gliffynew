@@ -1,0 +1,90 @@
+.cta-strip-wrapper {
+  width: 100%;
+  background: #170a1c;
+  /* Deep, premium plum/purple */
+  padding: 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-strip-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.cta-strip-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cta-strip-subtitle {
+  color: #c063b5;
+  /* Vibrant pink/purple */
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cta-strip-title {
+  color: #ffffff;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.cta-strip-right {
+  display: flex;
+  align-items: center;
+}
+
+.cta-strip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ae58a5 0%, #85377f 100%);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(174, 88, 165, 0.2);
+}
+
+.cta-strip-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(174, 88, 165, 0.4);
+  color: white;
+}
+
+.cta-strip-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.cta-strip-btn:hover svg {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 768px) {
+  .cta-strip-wrapper {
+    padding: 35px 20px;
+  }
+
+  .cta-strip-container {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 35px;
+  }
+}
