@@ -13,9 +13,9 @@ const Instagram = ({ size = 24, ...props }) => (
 );
 
 const dropdownOptions = [
-  { value: 'webdesign', label: 'Web Design' },
-  { value: 'seo', label: 'SEO' },
-  { value: 'couple site', label: 'Couple Site' },
+  { value: 'webdesign',      label: 'Web Design' },
+  { value: 'seo',            label: 'SEO' },
+  { value: 'couple site',    label: 'Couple Site' },
   { value: 'happy feedback', label: 'Happy Feedback' },
 ];
 
@@ -24,7 +24,6 @@ const CustomSelect = ({ value, onChange }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  // Close on outside click
   useEffect(() => {
     const handler = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -37,7 +36,6 @@ const CustomSelect = ({ value, onChange }) => {
 
   return (
     <div className="custom-select-wrap" ref={ref}>
-      {/* Trigger */}
       <button
         type="button"
         className={`custom-select-trigger${open ? ' open' : ''}${value ? ' has-value' : ''}`}
@@ -55,7 +53,6 @@ const CustomSelect = ({ value, onChange }) => {
         </motion.span>
       </button>
 
-      {/* Dropdown list */}
       <AnimatePresence>
         {open && (
           <motion.ul
@@ -88,8 +85,43 @@ const CustomSelect = ({ value, onChange }) => {
 };
 
 /* ── Main Contact Component ── */
+const WHATSAPP_NUMBER = '918220945226'; // Country code + number
+
 const Contact = () => {
   const [selectedService, setSelectedService] = useState('');
+  const [name, setName]       = useState('');
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Build the WhatsApp message
+    const service = dropdownOptions.find(o => o.value === selectedService)?.label || selectedService || 'Not specified';
+    const sep = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+    const text =
+`🎉 Woohoo! We've Received Your Message!
+${sep}
+👤 Name: ${name}
+💼 Service: ${service}
+📝 Message: ${message}
+${sep}
+🌟 "Big things start with a single message — and yours just made our day!"
+💜 Thank you for connecting with Gliffy.X Studio!
+🚀 Our team is already excited to work on your request
+⏳ You can expect a response very soon!
+${sep}
+✨ Stay awesome. We're building something great together!`;
+
+    const encoded = encodeURIComponent(text);
+    const waUrl   = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
+
+    setSending(true);
+    setTimeout(() => {
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      setSending(false);
+    }, 400); // Brief delay for the button animation to feel satisfying
+  };
 
   return (
     <div className="contact-page">
@@ -135,10 +167,16 @@ const Contact = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Full Name</label>
-                <input type="text" placeholder="Madasamy" required />
+                <input
+                  type="text"
+                  placeholder="Madasamy"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <label>Project Subject</label>
@@ -146,15 +184,26 @@ const Contact = () => {
               </div>
               <div className="form-group">
                 <label>Message</label>
-                <textarea rows="5" placeholder="Tell us about your project..." required></textarea>
+                <textarea
+                  rows="5"
+                  placeholder="Tell us about your project..."
+                  required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
               </div>
               <motion.button
                 type="submit"
-                className="btn-submit"
+                className={`btn-submit${sending ? ' sending' : ''}`}
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.96 }}
+                disabled={sending}
               >
-                Send <Send size={18} />
+                {sending ? (
+                  <>Opening WhatsApp… <span className="btn-spinner" /></>
+                ) : (
+                  <>Send via WhatsApp <Send size={18} /></>
+                )}
               </motion.button>
             </form>
           </motion.div>

@@ -4,28 +4,31 @@ import Lenis from 'lenis';
 const SmoothScroll = ({ children }) => {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.5, // Slightly longer global duration
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.9,
+      smoothTouch: true,   // enable on mobile too
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
-    window.lenis = lenis; // Expose for programmatic control
+    // Expose globally so Services page can use it
+    window.lenis = lenis;
 
+    let rafId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 
