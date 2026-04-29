@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, ChevronDown } from 'lucide-react';
+import { Mail, Phone, Send, ChevronDown } from 'lucide-react';
+
 import './Contact.css';
 
 const Instagram = ({ size = 24, ...props }) => (
