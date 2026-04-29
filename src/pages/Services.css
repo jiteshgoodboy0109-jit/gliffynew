@@ -1,6 +1,7 @@
 .service-hero {
   width: 100%;
-  min-height: calc(100vh - 80px); /* Adjust for navbar */
+  min-height: calc(100vh - 80px);
+  /* Adjust for navbar */
   background: #fdfdfd;
   display: flex;
   align-items: center;
@@ -171,6 +172,12 @@
   color: #111;
 }
 
+/* Heart card gets a red icon */
+.roadmap-item:last-child .roadmap-icon {
+  background: #fff0f2;
+  color: #e8294a;
+}
+
 .roadmap-content h3 {
   font-size: 1.5rem;
   font-weight: 800;
@@ -201,8 +208,9 @@
 }
 
 .bullet-icon {
-  color: #9a4d9a;
+  color: #e8294a;
   margin-top: 4px;
+  fill: #e8294a;
 }
 
 /* THE DOT on the line */
@@ -322,8 +330,10 @@
   }
 
   .service-image-side {
-    width: 60%; /* Larger for mobile visibility */
-    order: 2;   /* Put images below text */
+    width: 60%;
+    /* Larger for mobile visibility */
+    order: 2;
+    /* Put images below text */
   }
 
   .service-text {
@@ -339,7 +349,8 @@
     order: 3;
   }
 
-  .phone-mockup, .laptop-mockup {
+  .phone-mockup,
+  .laptop-mockup {
     max-width: 250px;
   }
 
@@ -347,20 +358,21 @@
     left: 20px;
     transform: none;
   }
-  
-  .roadmap-item, .roadmap-item.right {
+
+  .roadmap-item,
+  .roadmap-item.right {
     padding-left: 60px;
     padding-right: 0;
     justify-content: flex-start;
   }
-  
-  .left .roadmap-dot, .right .roadmap-dot {
+
+  .left .roadmap-dot,
+  .right .roadmap-dot {
     left: -48px;
     right: auto;
   }
-  
+
   .roadmap-decorator {
     display: none;
   }
 }
-

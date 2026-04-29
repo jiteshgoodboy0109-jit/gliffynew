@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, MapPin, Send, ChevronDown } from 'lucide-react';
 import './Contact.css';
 
 const Instagram = ({ size = 24, ...props }) => (
@@ -11,7 +11,85 @@ const Instagram = ({ size = 24, ...props }) => (
   </svg>
 );
 
+const dropdownOptions = [
+  { value: 'webdesign', label: 'Web Design' },
+  { value: 'seo', label: 'SEO' },
+  { value: 'couple site', label: 'Couple Site' },
+  { value: 'happy feedback', label: 'Happy Feedback' },
+];
+
+/* ── Custom Dropdown ── */
+const CustomSelect = ({ value, onChange }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const selected = dropdownOptions.find(o => o.value === value);
+
+  return (
+    <div className="custom-select-wrap" ref={ref}>
+      {/* Trigger */}
+      <button
+        type="button"
+        className={`custom-select-trigger${open ? ' open' : ''}${value ? ' has-value' : ''}`}
+        onClick={() => setOpen(prev => !prev)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span>{selected ? selected.label : 'Select an option'}</span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+          style={{ display: 'flex', alignItems: 'center' }}
+        >
+          <ChevronDown size={18} strokeWidth={2} />
+        </motion.span>
+      </button>
+
+      {/* Dropdown list */}
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            className="custom-select-list"
+            role="listbox"
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {dropdownOptions.map((opt) => (
+              <motion.li
+                key={opt.value}
+                role="option"
+                aria-selected={value === opt.value}
+                className={`custom-select-option${value === opt.value ? ' selected' : ''}`}
+                onClick={() => { onChange(opt.value); setOpen(false); }}
+                whileHover={{ x: 4 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              >
+                {value === opt.value && <span className="option-dot" />}
+                {opt.label}
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/* ── Main Contact Component ── */
 const Contact = () => {
+  const [selectedService, setSelectedService] = useState('');
+
   return (
     <div className="contact-page">
       <section className="contact-section">
@@ -59,17 +137,11 @@ const Contact = () => {
             <form className="contact-form">
               <div className="form-group">
                 <label>Full Name</label>
-                <input type="text" placeholder="John Doe" required />
+                <input type="text" placeholder="Madasamy" required />
               </div>
               <div className="form-group">
                 <label>Project Subject</label>
-                <select required className="contact-dropdown">
-                  <option value="" disabled selected>Select an option</option>
-                  <option value="webdesign">Web Design</option>
-                  <option value="seo">SEO</option>
-                  <option value="couple site">Couple Site</option>
-                  <option value="happy feedback">Happy Feedback</option>
-                </select>
+                <CustomSelect value={selectedService} onChange={setSelectedService} />
               </div>
               <div className="form-group">
                 <label>Message</label>
@@ -81,7 +153,7 @@ const Contact = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Send Message <Send size={18} />
+                Send <Send size={18} />
               </motion.button>
             </form>
           </motion.div>

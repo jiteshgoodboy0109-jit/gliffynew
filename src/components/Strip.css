@@ -1,11 +1,50 @@
+/* ══════════════════════════════════════════════
+   STRIP CTA — Gliffy.X Studio
+══════════════════════════════════════════════ */
+
 .cta-strip-wrapper {
   width: 100%;
-  background: #170a1c;
-  /* Deep, premium plum/purple */
+  background: linear-gradient(135deg, #12071a 0%, #1e0d2c 50%, #12071a 100%);
   padding: 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glowing border on top */
+.cta-strip-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(174, 88, 165, 0.8), transparent);
+}
+
+/* Shimmer sweep animation */
+.strip-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg,
+      transparent 30%,
+      rgba(154, 77, 154, 0.08) 50%,
+      transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer-sweep 4s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .cta-strip-container {
@@ -15,76 +54,113 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 30px;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-strip-left {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 
 .cta-strip-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   color: #c063b5;
-  /* Vibrant pink/purple */
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
+}
+
+.strip-spark {
+  color: #d480c4;
+  animation: spark-pulse 2s ease infinite;
+}
+
+@keyframes spark-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
 }
 
 .cta-strip-title {
   color: #ffffff;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
   margin: 0;
   line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, #e8c5e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .cta-strip-right {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .cta-strip-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #ae58a5 0%, #85377f 100%);
+  gap: 10px;
+  background: linear-gradient(135deg, #ae58a5 0%, #7a2f75 100%);
   color: white;
-  padding: 12px 32px;
+  padding: 16px 38px;
   border-radius: 100px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px rgba(174, 88, 165, 0.2);
+  transition: box-shadow 0.3s ease;
+  box-shadow:
+    0 0 0 1px rgba(174, 88, 165, 0.3),
+    0 12px 35px rgba(174, 88, 165, 0.35);
 }
 
 .cta-strip-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(174, 88, 165, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(174, 88, 165, 0.6),
+    0 20px 50px rgba(174, 88, 165, 0.5);
   color: white;
 }
 
-.cta-strip-btn svg {
-  transition: transform 0.3s ease;
-}
-
-.cta-strip-btn:hover svg {
-  transform: translate(3px, -3px);
-}
-
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .cta-strip-wrapper {
-    padding: 35px 20px;
+    padding: 20px 20px;
   }
 
   .cta-strip-container {
     flex-direction: column;
     text-align: center;
     align-items: center;
-    gap: 35px;
+    gap: 30px;
+  }
+
+  .cta-strip-subtitle {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-strip-btn {
+    padding: 14px 30px;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
   }
 }
