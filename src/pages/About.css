@@ -13,7 +13,7 @@
 }
 
 /* ── 1. HERO ─────────────────────────────────────── */
-.a-hero {
+.a-hero {   
   min-height: 88vh;
   display: flex;
   flex-direction: column;
@@ -165,7 +165,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  auto-rows: minmax(320px, auto);
+  grid-auto-rows: minmax(320px, auto);
 }
 
 /* Base Card with Glassmorphism & Depth */
