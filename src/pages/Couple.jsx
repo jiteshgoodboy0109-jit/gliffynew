@@ -404,7 +404,10 @@ export default function CouplePage() {
                         Crafting Digital <em>Love Stories</em>
                     </motion.h1>
                     <motion.button className="cp-btn-primary cp-btn-hero"
-                        onClick={() => toWA()}
+                        onClick={() => {
+                            const el = document.getElementById('cards');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
                         onMouseEnter={handleBtnEnter}
                         onMouseLeave={handleBtnLeave}
                         initial={{ opacity: 0, y: 20 }}
