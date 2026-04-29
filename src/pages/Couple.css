@@ -958,3 +958,235 @@ html {
 
 @media (max-width: 600px) {
 }
+
+/* ==========================================================
+   LOVE LANGUAGE QUIZ
+   ========================================================== */
+.cp-quiz-sec {
+    position: relative;
+    padding: 6rem 2rem;
+    z-index: 5;
+    background: transparent;
+}
+
+.cp-quiz-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cp-quiz-box {
+    background: rgba(30, 15, 50, 0.4);
+    border: 1px solid rgba(199, 125, 255, 0.15);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(199, 125, 255, 0.05);
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cp-quiz-intro h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.cp-quiz-intro p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.cp-btn-quiz {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #c77dff, #9d4edd);
+}
+
+.cp-quiz-progress {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FF4D6D;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.cp-quiz-question-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 2.5rem;
+    line-height: 1.3;
+}
+
+.cp-quiz-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.cp-quiz-opt-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 1.2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-quiz-opt-btn:hover {
+    background: rgba(199, 125, 255, 0.15);
+    border-color: rgba(199, 125, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cp-quiz-res-emoji {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4));
+}
+
+.cp-quiz-result h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.cp-quiz-result p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.cp-quiz-res-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .cp-quiz-sec {
+        padding: 4rem 1.5rem;
+    }
+    .cp-quiz-box {
+        padding: 2.5rem 1.5rem;
+        min-height: 400px;
+    }
+    .cp-quiz-intro h3, .cp-quiz-result h3 {
+        font-size: 2rem;
+    }
+    .cp-quiz-question-text {
+        font-size: 1.8rem;
+    }
+    .cp-quiz-opts {
+        gap: 0.8rem;
+    }
+    .cp-quiz-opt-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    .cp-quiz-res-btns {
+        flex-direction: column;
+    }
+}
+
+/* ══════════════════════════════════════════
+   HANGING LAMPS (THIRUMANAM STYLE)
+══════════════════════════════════════════ */
+.cp-hanging-lamps {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cp-lamp-container {
+  position: absolute;
+  top: -20px; /* Hide the origin slightly */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  animation: cp-sway 4s ease-in-out infinite alternate;
+}
+
+.cp-lamp-wire {
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.6));
+}
+
+.cp-lamp-bulb {
+  width: 14px;
+  height: 20px;
+  background: #ffea00;
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  box-shadow: 
+    0 0 10px #ffea00,
+    inset 0 0 5px #fff;
+  z-index: 2;
+}
+
+.cp-lamp-bulb::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #ffd600;
+  border-radius: 50%;
+}
+
+.cp-lamp-glow {
+  position: absolute;
+  bottom: -30px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255, 234, 0, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+  animation: cp-flicker 2s infinite alternate;
+}
+
+@keyframes cp-sway {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+@keyframes cp-flicker {
+  0% { opacity: 0.8; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .cp-lamp-container:nth-child(1) { left: 10% !important; }
+  .cp-lamp-container:nth-child(2) { left: 25% !important; height: 140px !important; }
+  .cp-lamp-container:nth-child(3) { left: 75% !important; height: 110px !important; }
+  .cp-lamp-container:nth-child(4) { left: 90% !important; height: 160px !important;}
+  .cp-lamp-glow { width: 50px; height: 50px; bottom: -15px; }
+  .cp-lamp-bulb { width: 10px; height: 14px; }
+}

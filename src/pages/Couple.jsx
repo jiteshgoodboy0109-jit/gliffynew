@@ -34,7 +34,32 @@ const PRODUCTS = [
     },
 ];
 
-
+const QUIZ_QUESTIONS = [
+    {
+        q: "How do you usually show your affection?",
+        opts: [
+            { text: "Planning a big surprise 🎉", type: "birthday" },
+            { text: "Making a grand, heartfelt promise 💍", type: "proposal" },
+            { text: "Saying 'I'm here for you, always' 🫂", type: "sorry" }
+        ]
+    },
+    {
+        q: "What does your ideal weekend look like?",
+        opts: [
+            { text: "Celebrating life with friends & fun 🥳", type: "birthday" },
+            { text: "A deeply romantic, candle-lit evening ✨", type: "proposal" },
+            { text: "A cozy night in, just focusing on us 🛋️", type: "sorry" }
+        ]
+    },
+    {
+        q: "Which phrase resonates with you most right now?",
+        opts: [
+            { text: "Let's make this your best day ever! 🎂", type: "birthday" },
+            { text: "You are my today and all my tomorrows. ❤️", type: "proposal" },
+            { text: "I just want to see you smile again. 🥺", type: "sorry" }
+        ]
+    }
+];
 
 const FLOAT_HEARTS = [
     { left: '7%', size: 14, opacity: 0.10, dur: 13, delay: 0 },
@@ -65,6 +90,24 @@ export default function CouplePage() {
     const [flameStatus, setFlameStatus] = useState('idle');
     const [flameResult, setFlameResult] = useState('');
     const [loadingText, setLoadingText] = useState('');
+
+    // Quiz State
+    const [quizStep, setQuizStep] = useState(0);
+    const [quizScores, setQuizScores] = useState({ proposal: 0, birthday: 0, sorry: 0 });
+    const [quizResult, setQuizResult] = useState(null);
+
+    const handleQuizAnswer = (type) => {
+        setQuizScores(prev => ({ ...prev, [type]: prev[type] + 1 }));
+        setQuizStep(prev => prev + 1);
+    };
+
+    useEffect(() => {
+        if (quizStep === QUIZ_QUESTIONS.length + 1) {
+            const winner = Object.keys(quizScores).reduce((a, b) => quizScores[a] > quizScores[b] ? a : b);
+            const product = PRODUCTS.find(p => p.id === winner);
+            setQuizResult(product);
+        }
+    }, [quizStep, quizScores]);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -323,6 +366,22 @@ export default function CouplePage() {
             {/* ── HERO ── */}
             <section className="cp-hero">
                 <div className="cp-hero-glow" aria-hidden="true" />
+                
+                {/* Thirumanam Style Hanging Lamps */}
+                <div className="cp-hanging-lamps" aria-hidden="true">
+                    {[
+                        { length: '120px', delay: '0s', left: '15%' },
+                        { length: '200px', delay: '-1s', left: '30%' },
+                        { length: '160px', delay: '-2s', left: '70%' },
+                        { length: '240px', delay: '-0.5s', left: '85%' },
+                    ].map((lamp, i) => (
+                        <div key={i} className="cp-lamp-container" style={{ left: lamp.left, animationDelay: lamp.delay }}>
+                            <div className="cp-lamp-wire" style={{ height: lamp.length }} />
+                            <div className="cp-lamp-bulb" />
+                            <div className="cp-lamp-glow" />
+                        </div>
+                    ))}
+                </div>
                 <motion.div className="cp-hero-body"
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}>
@@ -502,6 +561,64 @@ export default function CouplePage() {
                                 <button className="cp-btn-ghost" onClick={() => { setFlameStatus('idle'); setBName(''); setGName(''); }}>Play Again</button>
                             </motion.div>
                         )}
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* ── LOVE LANGUAGE QUIZ ── */}
+            <section className="cp-quiz-sec">
+                <motion.div className="cp-quiz-wrap"
+                    initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.8 }}>
+                    
+                    <div className="cp-sec-hdr" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                        <span className="cp-sec-tag">Discover</span>
+                        <h2 className="cp-sec-title">What's Your Love Language?</h2>
+                        <p className="cp-preview-p" style={{ maxWidth: '600px', margin: '0 auto' }}>Not sure what to get? Take this quick quiz to find the perfect page for your special someone.</p>
+                    </div>
+
+                    <div className="cp-quiz-box">
+                        <AnimatePresence mode="wait">
+                            {quizStep === 0 && (
+                                <motion.div key="intro" className="cp-quiz-intro" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -20 }}>
+                                    <Sparkles size={40} className="cp-quiz-icon" style={{ margin: '0 auto 1rem', display: 'block', color: '#c77dff' }} />
+                                    <h3>Find Your Perfect Match</h3>
+                                    <p>3 simple questions to discover the ideal digital gift.</p>
+                                    <motion.button className="cp-btn-primary cp-btn-quiz" onClick={() => setQuizStep(1)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                        Start Quiz ✨
+                                    </motion.button>
+                                </motion.div>
+                            )}
+
+                            {quizStep > 0 && quizStep <= QUIZ_QUESTIONS.length && (
+                                <motion.div key={`q${quizStep}`} className="cp-quiz-q" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
+                                    <span className="cp-quiz-progress">Question {quizStep} of {QUIZ_QUESTIONS.length}</span>
+                                    <h3 className="cp-quiz-question-text">{QUIZ_QUESTIONS[quizStep - 1].q}</h3>
+                                    <div className="cp-quiz-opts">
+                                        {QUIZ_QUESTIONS[quizStep - 1].opts.map((opt, i) => (
+                                            <motion.button key={i} className="cp-quiz-opt-btn" onClick={() => handleQuizAnswer(opt.type)}
+                                                whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.08)' }} whileTap={{ scale: 0.98 }}>
+                                                {opt.text}
+                                            </motion.button>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {quizStep > QUIZ_QUESTIONS.length && quizResult && (
+                                <motion.div key="result" className="cp-quiz-result" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+                                    <div className="cp-quiz-res-emoji">{quizResult.emoji}</div>
+                                    <h3>We recommend: {quizResult.title}</h3>
+                                    <p>{quizResult.tagline}</p>
+                                    <div className="cp-quiz-res-btns">
+                                        <button className="cp-btn-ghost" onClick={() => { setQuizStep(0); setQuizScores({ proposal: 0, birthday: 0, sorry: 0 }); setQuizResult(null); }}>Retake Quiz</button>
+                                        <motion.button className="cp-btn-primary" onClick={() => addToCart(quizResult)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                            <Heart size={14} fill="currentColor" style={{ marginRight: '6px' }} /> Add to Bundle
+                                        </motion.button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </motion.div>
             </section>
