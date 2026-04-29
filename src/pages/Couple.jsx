@@ -261,49 +261,74 @@ export default function CouplePage() {
           <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
             <defs>
               <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0a0314" />
-                <stop offset="50%" stop-color="#2a0a3a" />
-                <stop offset="100%" stop-color="#0a0314" />
+                <stop offset="0%" stop-color="#05010a" />
+                <stop offset="35%" stop-color="#1a052e" />
+                <stop offset="100%" stop-color="#05010a" />
               </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+              <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#c77dff" />
+                <stop offset="100%" stop-color="#FF4D6D" />
+              </linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="15" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <filter id="textGlow">
+                <feGaussianBlur stdDeviation="4" result="blur" />
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
-              <style>
-                @keyframes float {
-                  0%, 100% { transform: translateY(0); }
-                  50% { transform: translateY(-30px); }
-                }
-                .heart { animation: float 6s ease-in-out infinite; opacity: 0.15; font-size: 60px; fill: #FF4D6D; }
-                .h1 { animation-delay: 0s; } .h2 { animation-delay: 2s; } .h3 { animation-delay: 4s; } .h4 { animation-delay: 1s; }
-                .h5 { animation-delay: 3s; }
-              </style>
             </defs>
+            
             <rect width="1080" height="1080" fill="url(#bg)"/>
             
-            <rect x="40" y="40" width="1000" height="1000" fill="none" stroke="rgba(255,77,109,0.3)" stroke-width="4" rx="40"/>
-            <rect x="60" y="60" width="960" height="960" fill="none" stroke="rgba(199,125,255,0.2)" stroke-width="2" rx="30" stroke-dasharray="20 20"/>
+            <!-- Floating Decorative Stars (Google/AI Style) -->
+            <circle cx="150" cy="150" r="2" fill="#fff" opacity="0.8"/>
+            <circle cx="930" cy="200" r="1.5" fill="#fff" opacity="0.6"/>
+            <circle cx="200" cy="880" r="2" fill="#fff" opacity="0.7"/>
+            <circle cx="850" cy="750" r="1" fill="#fff" opacity="0.5"/>
+            <circle cx="540" cy="540" r="300" fill="url(#textGrad)" opacity="0.03" filter="url(#glow)"/>
             
-            <text x="150" y="200" class="heart h1">♥</text>
-            <text x="850" y="250" class="heart h2" font-size="90px">♥</text>
-            <text x="200" y="850" class="heart h3" font-size="120px">♥</text>
-            <text x="900" y="800" class="heart h4" font-size="70px">♥</text>
-            <text x="540" y="150" class="heart h5" font-size="50px">♥</text>
+            <!-- Main Border -->
+            <rect x="50" y="50" width="980" height="980" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" rx="50"/>
+            <rect x="70" y="70" width="940" height="940" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" rx="40" stroke-dasharray="10 20"/>
 
-            <text x="540" y="320" font-family="'Cormorant Garamond', serif" font-size="70" fill="#fff" text-anchor="middle" font-style="italic">Destiny says...</text>
+            <!-- Header Branding -->
+            <g opacity="0.6">
+                <text x="540" y="120" font-family="Arial, sans-serif" font-size="20" fill="#fff" text-anchor="middle" letter-spacing="12" font-weight="900">GLIFFY.X STUDIO</text>
+                <line x1="480" y1="135" x2="600" y2="135" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            </g>
+
+            <!-- Title Section -->
+            <text x="540" y="280" font-family="'Times New Roman', serif" font-size="45" fill="#fff" text-anchor="middle" font-style="italic" opacity="0.9">The Stars Have Spoken</text>
             
-            <text x="540" y="480" font-family="'Cormorant Garamond', serif" font-size="120" fill="#FF4D6D" text-anchor="middle" font-weight="bold" filter="url(#glow)">${bName} &amp; ${gName}</text>
+            <!-- Names Section (Tightened) -->
+            <text x="540" y="420" font-family="'Times New Roman', serif" font-size="120" fill="#fff" text-anchor="middle" font-weight="bold" filter="url(#textGlow)">${bName} &amp; ${gName}</text>
             
-            <text x="540" y="620" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="8">ARE DESTINED TO BE</text>
+            <g transform="translate(540, 480)">
+                <path d="M-100 0 L100 0" stroke="url(#textGrad)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+                <circle cx="0" cy="0" r="5" fill="#FF4D6D" filter="url(#textGlow)"/>
+            </g>
             
-            <text x="540" y="820" font-family="'Cormorant Garamond', serif" font-size="160" fill="#c77dff" text-anchor="middle" font-weight="bold" filter="url(#glow)" letter-spacing="10" text-transform="uppercase">${res}</text>
+            <text x="540, 540" y="540" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="10" font-weight="bold">ARE DESTINED TO BE</text>
             
-            <text x="540" y="980" font-size="130" text-anchor="middle">${FLAMES_EMOJIS[res] || '🌹'}</text>
+            <!-- Result Section (Tightened) -->
+            <text x="540" y="720" font-family="'Times New Roman', serif" font-size="180" fill="url(#textGrad)" text-anchor="middle" font-weight="bold" filter="url(#glow)" letter-spacing="5" text-transform="uppercase">${res}</text>
+            
+            <g transform="translate(540, 850) scale(1.5)">
+                <text font-size="80" text-anchor="middle" filter="url(#textGlow)">${FLAMES_EMOJIS[res] || '🌹'}</text>
+            </g>
+            
+            <!-- Footer Section -->
+            <g transform="translate(540, 1000)">
+                <text font-family="Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.3)" text-anchor="middle" letter-spacing="4">CERTIFIED BY THE COSMOS • GLIFFY.X STUDIO</text>
+            </g>
           </svg>
         `;
+
+
             const blob = new Blob([svg], { type: 'image/svg+xml' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
