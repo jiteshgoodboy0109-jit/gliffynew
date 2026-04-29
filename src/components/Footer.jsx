@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Heart, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import logo from '../assets/logo 3.png';
 import './Footer.css';
@@ -29,11 +29,11 @@ const itemVariants = {
 };
 
 const quickLinks = [
-  { label: 'Home',      to: '/' },
-  { label: 'Services',  to: '/services' },
-  { label: 'About Us',  to: '/about' },
-  { label: 'Couple ❤',  to: '/Couple', active: true },
-  { label: 'Contact',   to: '/contact' },
+  { label: 'Home', to: '/' },
+  { label: 'Services', to: '/services' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Couple ❤', to: '/Couple', active: true },
+  { label: 'Contact', to: '/contact' },
 ];
 
 const Footer = () => {
@@ -59,9 +59,9 @@ const Footer = () => {
           <motion.div className="footer-brand" variants={itemVariants}>
             <Link to="/" className="footer-logo-link">
               <div className="footer-logo-glow">
-                <img src={logo} alt="Gliffy.X Studio" className="footer-logo" />
+                <img src={logo} alt="Gliffy.X " className="footer-logo" />
               </div>
-              <span className="footer-shop-name">Gliffy.X Studio</span>
+              <span className="footer-shop-name">Gliffy.X </span>
             </Link>
 
             <p className="footer-tagline">
@@ -72,8 +72,8 @@ const Footer = () => {
             <div className="social-links">
               {[
                 { href: 'https://www.instagram.com/gliffyxstudio/', label: 'Instagram', Icon: Instagram, color: '#E1306C' },
-                { href: 'mailto:gliffyx.studio@gmail.com',          label: 'Email',     Icon: Mail,      color: '#9a4d9a' },
-                { href: 'tel:+918220945226',                        label: 'Phone',     Icon: Phone,     color: '#25D366' },
+                { href: 'mailto:gliffyx.studio@gmail.com', label: 'Email', Icon: Mail, color: '#9a4d9a' },
+                { href: 'tel:+918220945226', label: 'Phone', Icon: Phone, color: '#25D366' },
               ].map(({ href, label, Icon, color }) => (
                 <motion.a
                   key={label}
@@ -116,9 +116,9 @@ const Footer = () => {
             <h4 className="footer-col-title">Get In Touch</h4>
             <div className="footer-contact-items">
               {[
-                { Icon: Mail,   href: 'mailto:gliffyx.studio@gmail.com', text: 'gliffyx.studio@gmail.com' },
-                { Icon: Phone,  href: 'tel:+918220945226',               text: '+91 82209 45226' },
-                { Icon: MapPin, href: null,                              text: 'Udumalpet · Pollachi · Coimbatore' },
+                { Icon: Mail, href: 'mailto:gliffyx.studio@gmail.com', text: 'gliffyx.studio@gmail.com' },
+                { Icon: Phone, href: 'tel:+918220945226', text: '+91 82209 45226' },
+                { Icon: MapPin, href: null, text: 'Udumalpet · Pollachi · Coimbatore' },
               ].map(({ Icon, href, text }) => (
                 <motion.div
                   key={text}
@@ -135,16 +135,6 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Mini CTA inside footer */}
-            <motion.div
-              className="footer-mini-cta"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <Link to="/contact" className="footer-cta-pill">
-                Start a Project <ArrowUpRight size={15} strokeWidth={2.5} />
-              </Link>
-            </motion.div>
           </motion.div>
 
         </motion.div>
@@ -169,7 +159,7 @@ const Footer = () => {
       >
         <div className="container footer-bottom-inner">
           <p className="footer-copy">
-            © {currentYear} Gliffy.X Studio. All rights reserved.
+            © {currentYear} Gliffy.X . All rights reserved.
           </p>
           <p className="footer-made-with">
             Made with{' '}
@@ -180,7 +170,7 @@ const Footer = () => {
             >
               <Heart size={14} fill="#ff2d55" stroke="#ff2d55" style={{ margin: '0 4px' }} />
             </motion.span>
-            in India
+            in Gliffy.X
           </p>
         </div>
       </motion.div>

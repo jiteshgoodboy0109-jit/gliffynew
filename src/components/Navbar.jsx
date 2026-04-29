@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link to="/" className="brand-link" onClick={() => setIsOpen(false)}>
             <motion.img
               src={logo}
-              alt="Gliffy.X Studio"
+              alt="Gliffy.X "
               className="navbar-logo"
               whileHover={{ rotate: 5, scale: 1.1 }}
             />
@@ -27,7 +27,7 @@ const Navbar = () => {
               className="company-name"
               whileHover={{ x: 5 }}
             >
-              Gliffy.X Studio
+              Gliffy.X 
             </motion.span>
           </Link>
         </motion.div>
@@ -41,7 +41,7 @@ const Navbar = () => {
             <li><NavLink to="/" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
             <li><NavLink to="/services" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Services</NavLink></li>
             <li><NavLink to="/about" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink></li>
-            <li><NavLink to="/Couples" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}><b className='text-purple-500' style={{ color: "#ff0000ff" }} >Couples</b></NavLink></li>
+            <li><NavLink to="/couple" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}><b className='text-purple-500' style={{ color: "#ff4d6d" }} >Couple ❤</b></NavLink></li>
           </ul>
 
           <div className="nav-actions">

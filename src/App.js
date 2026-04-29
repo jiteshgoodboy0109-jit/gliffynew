@@ -9,10 +9,13 @@ import About from './pages/About';
 import './App.css';
 
 import SmoothScroll from './components/SmoothScroll';
+import ScrollToTop from './components/ScrollToTop';
+import Couple from './pages/Couple';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <SmoothScroll>
         <div className="App">
           <Navbar />
@@ -22,6 +25,8 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/couple" element={<Couple />} />
+              <Route path="/Couple" element={<Couple />} />
               {/* Added routes to prevent broken links for now */}
               <Route path="/projects" element={<Home />} />
               <Route path="/freelancers" element={<Home />} />

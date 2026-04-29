@@ -1,0 +1,630 @@
+import React, { useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, X, ShoppingCart, Sparkles, ArrowRight } from 'lucide-react';
+import './Couple.css';
+
+const WHATSAPP = '918220945226';
+
+const FLAMES_EMOJIS = {
+    Friends: '🤝', Lovers: '💘', Affection: '🫂',
+    Marriage: '💍', Enemies: '⚔️', Siblings: '👫'
+};
+
+const PRODUCTS = [
+    {
+        id: 'proposal', emoji: '💍', title: 'Proposal Page',
+        tagline: 'Ask the question that changes everything.',
+        desc: 'A beautifully crafted webpage that tells your love story and pops the question in the most magical way possible.',
+        features: ['Custom love story', 'Music integration', 'Photo gallery', 'Interactive Yes/No'],
+        price: '₹299', color: '#9d4edd', glow: 'rgba(157,78,221,0.5)',
+    },
+    {
+        id: 'birthday', emoji: '🎂', title: 'Birthday Page',
+        tagline: "A birthday surprise they'll never forget.",
+        desc: 'Interactive digital gift that unfolds memories, wishes, and surprises as they scroll through.',
+        features: ['Photo timeline', 'Birthday countdown', 'Surprise reveals', 'Custom music'],
+        price: '₹249', color: '#FF4D6D', glow: 'rgba(255,77,109,0.5)',
+    },
+    {
+        id: 'sorry', emoji: '🥺', title: 'Sorry Page',
+        tagline: "Because sometimes words aren't enough.",
+        desc: 'A heartfelt webpage that conveys your apology with sincerity, warmth, and depth.',
+        features: ['Emotional storytelling', 'Custom message', 'Memory gallery', 'Animated elements'],
+        price: '₹199', color: '#c77dff', glow: 'rgba(199,125,255,0.5)',
+    },
+];
+
+
+
+const FLOAT_HEARTS = [
+    { left: '7%', size: 14, opacity: 0.10, dur: 13, delay: 0 },
+    { left: '20%', size: 10, opacity: 0.07, dur: 16, delay: 4 },
+    { left: '36%', size: 18, opacity: 0.09, dur: 11, delay: 7 },
+    { left: '53%', size: 11, opacity: 0.06, dur: 15, delay: 2 },
+    { left: '68%', size: 15, opacity: 0.10, dur: 12, delay: 5 },
+    { left: '82%', size: 12, opacity: 0.08, dur: 14, delay: 1 },
+    { left: '91%', size: 16, opacity: 0.07, dur: 17, delay: 8 },
+];
+
+export default function CouplePage() {
+    const [cart, setCart] = useState([]);
+    const [modal, setModal] = useState(null);
+    const [popup, setPopup] = useState(null);
+
+    const [cartBounce, setCartBounce] = useState(false);
+    const [petals, setPetals] = useState(false);
+
+    const [activePetals, setActivePetals] = useState([]);
+
+    // Hover effect helpers
+    const handleBtnEnter = () => {}; 
+    const handleBtnLeave = () => {};
+
+    const [bName, setBName] = useState('');
+    const [gName, setGName] = useState('');
+    const [flameStatus, setFlameStatus] = useState('idle');
+    const [flameResult, setFlameResult] = useState('');
+    const [loadingText, setLoadingText] = useState('');
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            // Spawn trailing petals
+            if (Math.random() > 0.85) {
+                spawnPetal(e.clientX, e.clientY, 'trail');
+            }
+        };
+
+        const handleGlobalClick = (e) => {
+            // Explosion effect
+            for (let i = 0; i < 12; i++) {
+                spawnPetal(e.clientX, e.clientY, 'burst');
+            }
+        };
+
+        const spawnPetal = (x, y, type) => {
+            const id = Math.random();
+            const petal = {
+                id,
+                x,
+                y,
+                size: Math.random() * (type === 'burst' ? 15 : 20) + 10,
+                color: ['#FF4D6D', '#FFC0CB', '#ffb3c1'][Math.floor(Math.random() * 3)],
+                rotation: Math.random() * 360,
+                vx: (Math.random() - 0.5) * (type === 'burst' ? 8 : 2),
+                vy: (Math.random() * 2) + (type === 'burst' ? -4 : 1),
+                rotationSpeed: (Math.random() - 0.5) * 10,
+                opacity: Math.random() * 0.3 + 0.4,
+                blur: Math.random() > 0.7 ? '2px' : '0px',
+                life: 1
+            };
+
+            setActivePetals(prev => {
+                const next = [...prev, petal];
+                if (next.length > 60) return next.slice(1);
+                return next;
+            });
+
+            // Physics loop for this specific petal
+            let currentPetal = petal;
+            const startTime = Date.now();
+            const duration = Math.random() * 1500 + 1500;
+
+            const update = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+
+                if (progress >= 1) {
+                    setActivePetals(prev => prev.filter(p => p.id !== id));
+                    return;
+                }
+
+                currentPetal = {
+                    ...currentPetal,
+                    x: currentPetal.x + currentPetal.vx + Math.sin(elapsed / 500) * 0.5, // wind
+                    y: currentPetal.y + currentPetal.vy + 0.5, // gravity
+                    rotation: currentPetal.rotation + currentPetal.rotationSpeed,
+                    life: 1 - progress
+                };
+
+                setActivePetals(prev => prev.map(p => p.id === id ? currentPetal : p));
+                requestAnimationFrame(update);
+            };
+
+            requestAnimationFrame(update);
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('click', handleGlobalClick);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('click', handleGlobalClick);
+        };
+    }, []); // Always active petal engine
+
+    const [n1Display, setN1Display] = useState([]);
+    const [n2Display, setN2Display] = useState([]);
+
+    const calculateFlames = useCallback(async () => {
+        if (!bName.trim() || !gName.trim()) return;
+
+        // Setup initial display
+        setN1Display(bName.toUpperCase().split('').map((char, i) => ({ char, id: `n1-${i}`, status: 'active' })));
+        setN2Display(gName.toUpperCase().split('').map((char, i) => ({ char, id: `n2-${i}`, status: 'active' })));
+
+        setFlameStatus('calculating');
+        setLoadingText('Consulting the stars...');
+
+        let n1Arr = bName.toLowerCase().replace(/[^a-z]/g, '').split('');
+        let n2Arr = gName.toLowerCase().replace(/[^a-z]/g, '').split('');
+
+        // Dramatic delay before cancellation starts
+        await new Promise(r => setTimeout(r, 1500));
+        setLoadingText('Merging souls...');
+
+        // Cancellation Animation Logic
+        let currentN1 = bName.toUpperCase().split('').map((char, i) => ({ char, id: `n1-${i}`, status: 'active' }));
+        let currentN2 = gName.toUpperCase().split('').map((char, i) => ({ char, id: `n2-${i}`, status: 'active' }));
+
+        for (let i = 0; i < n1Arr.length; i++) {
+            for (let j = 0; j < n2Arr.length; j++) {
+                if (n1Arr[i] === n2Arr[j]) {
+                    // Find actual index in display arrays (skipping symbols/spaces)
+                    const char1 = n1Arr[i];
+                    const char2 = n2Arr[j];
+                    const idx1 = currentN1.findIndex((item) => item.char.toLowerCase() === char1 && item.status === 'active');
+                    const idx2 = currentN2.findIndex((item) => item.char.toLowerCase() === char2 && item.status === 'active');
+
+                    if (idx1 !== -1 && idx2 !== -1) {
+                        currentN1[idx1].status = 'cancelled';
+                        currentN2[idx2].status = 'cancelled';
+
+                        setN1Display([...currentN1]);
+                        setN2Display([...currentN2]);
+
+                        n1Arr.splice(i, 1);
+                        n2Arr.splice(j, 1);
+                        i--;
+
+                        await new Promise(r => setTimeout(r, 300)); // Speed of cancellation
+                        break;
+                    }
+                }
+            }
+        }
+
+        setLoadingText('Calculating ultimate bond...');
+        await new Promise(r => setTimeout(r, 1000));
+
+        const count = n1Arr.length + n2Arr.length;
+        let res = 'Friends';
+        if (count > 0) {
+            let flames = ['Friends', 'Lovers', 'Affection', 'Marriage', 'Enemies', 'Siblings'];
+            let idx = 0;
+            while (flames.length > 1) {
+                idx = (idx + count - 1) % flames.length;
+                flames.splice(idx, 1);
+            }
+            res = flames[0];
+        }
+
+        setFlameResult(res);
+        setLoadingText('Destiny revealed!');
+        await new Promise(r => setTimeout(r, 800));
+        setFlameStatus('result');
+
+        // Poster Generation Logic (Keep as is)
+        setTimeout(() => {
+            const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+            <defs>
+              <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0a0314" />
+                <stop offset="50%" stop-color="#2a0a3a" />
+                <stop offset="100%" stop-color="#0a0314" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <style>
+                @keyframes float {
+                  0%, 100% { transform: translateY(0); }
+                  50% { transform: translateY(-30px); }
+                }
+                .heart { animation: float 6s ease-in-out infinite; opacity: 0.15; font-size: 60px; fill: #FF4D6D; }
+                .h1 { animation-delay: 0s; } .h2 { animation-delay: 2s; } .h3 { animation-delay: 4s; } .h4 { animation-delay: 1s; }
+                .h5 { animation-delay: 3s; }
+              </style>
+            </defs>
+            <rect width="1080" height="1080" fill="url(#bg)"/>
+            
+            <rect x="40" y="40" width="1000" height="1000" fill="none" stroke="rgba(255,77,109,0.3)" stroke-width="4" rx="40"/>
+            <rect x="60" y="60" width="960" height="960" fill="none" stroke="rgba(199,125,255,0.2)" stroke-width="2" rx="30" stroke-dasharray="20 20"/>
+            
+            <text x="150" y="200" class="heart h1">♥</text>
+            <text x="850" y="250" class="heart h2" font-size="90px">♥</text>
+            <text x="200" y="850" class="heart h3" font-size="120px">♥</text>
+            <text x="900" y="800" class="heart h4" font-size="70px">♥</text>
+            <text x="540" y="150" class="heart h5" font-size="50px">♥</text>
+
+            <text x="540" y="320" font-family="'Cormorant Garamond', serif" font-size="70" fill="#fff" text-anchor="middle" font-style="italic">Destiny says...</text>
+            
+            <text x="540" y="480" font-family="'Cormorant Garamond', serif" font-size="120" fill="#FF4D6D" text-anchor="middle" font-weight="bold" filter="url(#glow)">${bName} &amp; ${gName}</text>
+            
+            <text x="540" y="620" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="8">ARE DESTINED TO BE</text>
+            
+            <text x="540" y="820" font-family="'Cormorant Garamond', serif" font-size="160" fill="#c77dff" text-anchor="middle" font-weight="bold" filter="url(#glow)" letter-spacing="10" text-transform="uppercase">${res}</text>
+            
+            <text x="540" y="980" font-size="130" text-anchor="middle">${FLAMES_EMOJIS[res] || '🌹'}</text>
+          </svg>
+        `;
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${bName}_${gName}_FLAMES.svg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 1000);
+    }, [bName, gName, setN1Display, setN2Display, setFlameStatus, setLoadingText, setFlameResult]);
+
+    const toWA = useCallback((product) => {
+        const msg = product
+            ? `Hi Gliffy.X! 💜 I want to order a *${product.title}* (${product.price}). Please help me get started!`
+            : `Hi Gliffy.X! 💜 I'm interested in creating a Couple Page. Can you help?`;
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+    }, []);
+
+    const addToCart = useCallback((product) => {
+        setCart(prev => prev.find(p => p.id === product.id) ? prev : [...prev, product]);
+        setPopup(product);
+        setCartBounce(true);
+        setPetals(true);
+        setTimeout(() => setCartBounce(false), 800);
+        setTimeout(() => setPetals(false), 1600);
+        setTimeout(() => setPopup(null), 5000);
+    }, []);
+
+
+
+
+    return (
+        <div className="cp-page">
+
+            {/* Floating hearts */}
+            <div className="cp-hearts-bg" aria-hidden="true">
+                {FLOAT_HEARTS.map((h, i) => (
+                    <span key={i} className="cp-fheart" style={{
+                        left: h.left, fontSize: h.size, opacity: h.opacity,
+                        animationDuration: `${h.dur}s`, animationDelay: `${h.delay}s`,
+                    }}>♥</span>
+                ))}
+            </div>
+
+            {/* Rose petals burst */}
+            <AnimatePresence>
+                {petals && (
+                    <div className="cp-petals" aria-hidden="true">
+                        {[...Array(14)].map((_, i) => (
+                            <span key={i} className="cp-petal" style={{
+                                left: `${8 + i * 6.5}%`,
+                                animationDelay: `${i * 0.07}s`,
+                            }}>🌸</span>
+                        ))}
+                    </div>
+                )}
+            </AnimatePresence>
+
+            {/* ── HERO ── */}
+            <section className="cp-hero">
+                <div className="cp-hero-glow" aria-hidden="true" />
+                <motion.div className="cp-hero-body"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}>
+
+                    <motion.span className="cp-badge"
+                        initial={{ opacity: 0, scale: 0.8, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.6, type: 'spring' }}>
+                        <Sparkles size={12} /> By Gliffy.X
+                    </motion.span>
+
+                    <motion.h1
+                        className="cp-hero-h1"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+                        }}
+                    >
+                        Crafting Digital <em>Love Stories</em>
+                    </motion.h1>
+                    <motion.button className="cp-btn-primary cp-btn-hero"
+                        onClick={() => toWA()}
+                        onMouseEnter={handleBtnEnter}
+                        onMouseLeave={handleBtnLeave}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        whileHover={{ scale: 1.06, boxShadow: '0 0 30px rgba(127, 0, 255, 0.4)' }} whileTap={{ scale: 0.95 }}>
+                        Start Your Project <ArrowRight size={18} />
+                    </motion.button>
+                </motion.div>
+            </section>
+
+
+
+            {/* ── CARDS ── */}
+            <section className="cp-cards-section" id="cards">
+                <motion.div className="cp-sec-hdr"
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                    <span className="cp-sec-tag">Choose Your Story</span>
+                    <h2 className="cp-sec-title">Three pages. Infinite feelings.</h2>
+                </motion.div>
+                <div className="cp-grid">
+                    {PRODUCTS.map((p, i) => (
+                        <motion.article key={p.id} className="cp-card"
+                            style={{ '--cc': p.color, '--cg': p.glow }}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-40px' }}
+                            transition={{ duration: 0.7, delay: i * 0.14 }}
+                            whileHover={{ y: -12 }}>
+                            <div className="cp-card-mesh" />
+                            <div className="cp-card-emoji">{p.emoji}</div>
+                            <div className="cp-card-hb" aria-hidden="true">♥</div>
+                            <h3 className="cp-card-title">{p.title}</h3>
+                            <p className="cp-card-tagline">{p.tagline}</p>
+                            <ul className="cp-card-feats">
+                                {p.features.map(f => (
+                                    <li key={f}><Heart size={10} fill="currentColor" />{f}</li>
+                                ))}
+                            </ul>
+                            <div className="cp-card-foot">
+                                <span className="cp-price">{p.price}</span>
+                                <div className="cp-card-btns">
+                                    <button className="cp-btn-prev" onClick={() => setModal(p)} onMouseEnter={handleBtnEnter} onMouseLeave={handleBtnLeave}>Preview</button>
+                                    <motion.button className="cp-btn-add"
+                                        onClick={() => addToCart(p)} onMouseEnter={handleBtnEnter} onMouseLeave={handleBtnLeave} whileTap={{ scale: 0.9 }}>
+                                        <Heart size={13} fill="currentColor" /> Add
+                                    </motion.button>
+                                </div>
+                            </div>
+                        </motion.article>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── FLAMES GAME ── */}
+            <section className="cp-flames-sec" id="flames">
+                <motion.div className="cp-flames-wrap"
+                    initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.8 }}>
+
+                    <div className="cp-flames-header">
+                        <span className="cp-sec-tag">Interactive</span>
+                        <h2 className="cp-preview-h2">FLAMES Magic</h2>
+                        <p className="cp-preview-p">Test your bond. Enter your names and let destiny decide.</p>
+                    </div>
+
+                    <div className="cp-flames-box">
+                        {flameStatus === 'idle' && (
+                            <motion.div className="cp-flames-inputs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                <div className="cp-input-group">
+                                    <input type="text" placeholder="Alagan" value={bName} onChange={e => setBName(e.target.value)} maxLength={20} />
+                                    <Heart size={20} fill="#FF4D6D" color="#FF4D6D" className="cp-flame-icon" />
+                                    <input type="text" placeholder="Alagii😘" value={gName} onChange={e => setGName(e.target.value)} maxLength={20} />
+                                </div>
+                                <motion.button className="cp-btn-primary cp-btn-flames" onClick={calculateFlames}
+                                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                                    disabled={!bName.trim() || !gName.trim()}>
+                                    Play FLAMES ✨
+                                </motion.button>
+                            </motion.div>
+                        )}
+
+                        {flameStatus === 'calculating' && (
+                            <motion.div className="cp-flames-calc cp-flames-calc--new" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                <div className="cp-destiny-display">
+                                    <div className="cp-name-line">
+                                        {n1Display.map(item => (
+                                            <motion.span key={item.id}
+                                                className={`cp-char ${item.status}`}
+                                                animate={item.status === 'cancelled' ? { scale: 0.8, opacity: 0.2, y: 10 } : {}}
+                                            >
+                                                {item.char}
+                                                {item.status === 'cancelled' && <motion.div className="cp-strike" initial={{ width: 0 }} animate={{ width: '100%' }} />}
+                                            </motion.span>
+                                        ))}
+                                    </div>
+                                    <motion.div className="cp-destiny-heart" animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 0.8 }}>
+                                        <Heart fill="#FF4D6D" size={32} />
+                                    </motion.div>
+                                    <div className="cp-name-line">
+                                        {n2Display.map(item => (
+                                            <motion.span key={item.id}
+                                                className={`cp-char ${item.status}`}
+                                                animate={item.status === 'cancelled' ? { scale: 0.8, opacity: 0.2, y: -10 } : {}}
+                                            >
+                                                {item.char}
+                                                {item.status === 'cancelled' && <motion.div className="cp-strike" initial={{ width: 0 }} animate={{ width: '100%' }} />}
+                                            </motion.span>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="cp-flames-letters-v2">
+                                    {['F', 'L', 'A', 'M', 'E', 'S'].map((l, i) => (
+                                        <motion.span key={i}
+                                            className="cp-flame-l"
+                                            animate={{
+                                                opacity: [0.4, 1, 0.4],
+                                                scale: [1, 1.2, 1],
+                                                textShadow: ['0 0 0px #fff', '0 0 20px #FF4D6D', '0 0 0px #fff']
+                                            }}
+                                            transition={{ repeat: Infinity, duration: 1.5, delay: i * 0.2 }}
+                                        >
+                                            {l}
+                                        </motion.span>
+                                    ))}
+                                </div>
+                                <AnimatePresence mode="wait">
+                                    <motion.p
+                                        key={loadingText}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 1.1 }}
+                                        className="cp-calc-status"
+                                    >
+                                        {loadingText}
+                                    </motion.p>
+                                </AnimatePresence>
+                            </motion.div>
+                        )}
+
+                        {flameStatus === 'result' && (
+                            <motion.div className="cp-flames-result" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', bounce: 0.5 }}>
+                                <motion.span className="cp-flame-res-emoji"
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: [1, 1.4, 1], rotate: 0 }}
+                                    transition={{ type: 'spring', damping: 10, mass: 0.8, delay: 0.2 }}
+                                    style={{ display: 'inline-block' }}
+                                >
+                                    {FLAMES_EMOJIS[flameResult] || '🌹'}
+                                </motion.span>
+                                <h3 className="cp-flame-res-text">{flameResult}</h3>
+                                <p>Your beautiful result poster has been auto-downloaded!</p>
+                                <button className="cp-btn-ghost" onClick={() => { setFlameStatus('idle'); setBName(''); setGName(''); }}>Play Again</button>
+                            </motion.div>
+                        )}
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* ── CART BAR ── */}
+            {cart.length > 0 && (
+                <motion.div className="cp-cart-bar"
+                    initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}>
+                    <motion.div animate={cartBounce ? { scale: [1, 1.3, 1] } : {}}
+                        transition={{ duration: 0.4 }}>
+                        <ShoppingCart size={18} />
+                    </motion.div>
+                    <span>{cart.length} item{cart.length > 1 ? 's' : ''} in love bundle</span>
+                    <button className="cp-cart-order" onClick={() => {
+                        const msg = `Hi! I want to order:\n${cart.map(c => `• ${c.title} (${c.price})`).join('\n')}\nTotal: ₹${cart.reduce((a, c) => a + parseInt(c.price.replace('₹', '')), 0)}`;
+                        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+                    }}>Order Now</button>
+                </motion.div>
+            )}
+
+            {/* ── ADD-TO-CART POPUP ── */}
+            <AnimatePresence>
+                {popup && (
+                    <motion.div className="cp-popup"
+                        initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.85, y: 20 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                        <button className="cp-popup-close" onClick={() => setPopup(null)}><X size={16} /></button>
+                        <div className="cp-popup-heart" aria-hidden="true">💖</div>
+                        <h4>Added to your love bundle!</h4>
+                        <p>You're creating something beautiful.</p>
+                        <div className="cp-popup-btns">
+                            <button onClick={() => setPopup(null)}>Continue Exploring</button>
+                            <button className="cp-popup-order" onClick={() => {
+                                setPopup(null);
+                                toWA(popup);
+                            }}>Order Now →</button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── MODAL ── */}
+            <AnimatePresence>
+                {modal && (
+                    <motion.div className="cp-modal-overlay"
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        onClick={() => setModal(null)}>
+                        <motion.div className="cp-modal"
+                            style={{ '--cc': modal.color, '--cg': modal.glow }}
+                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            onClick={e => e.stopPropagation()}>
+                            <button className="cp-modal-close" onClick={() => setModal(null)}><X size={20} /></button>
+                            <div className="cp-modal-emoji">{modal.emoji}</div>
+                            <h3 className="cp-modal-title">{modal.title}</h3>
+                            <p className="cp-modal-tagline">{modal.tagline}</p>
+                            <p className="cp-modal-desc">{modal.desc}</p>
+                            <ul className="cp-modal-feats">
+                                {modal.features.map(f => <li key={f}><Heart size={12} fill="currentColor" />{f}</li>)}
+                            </ul>
+                            <div className="cp-modal-foot">
+                                <span className="cp-price cp-price--lg">{modal.price}</span>
+                                <motion.button className="cp-btn-primary"
+                                    onClick={() => { addToCart(modal); setModal(null); }}
+                                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <Heart size={15} fill="currentColor" /> Add to Bundle
+                                </motion.button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Premium Rose Petal Cursor Engine */}
+            <div className="cp-cursor-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9999 }}>
+                <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+                    <defs>
+                        <radialGradient id="petal-grad-1" cx="40%" cy="40%" r="60%">
+                            <stop offset="0%" stopColor="#ffb3c1" />
+                            <stop offset="60%" stopColor="#FF4D6D" />
+                            <stop offset="100%" stopColor="#c9184a" />
+                        </radialGradient>
+                        <radialGradient id="petal-grad-2" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stopColor="#ff758f" />
+                            <stop offset="50%" stopColor="#ff4d6d" />
+                            <stop offset="100%" stopColor="#a4133c" />
+                        </radialGradient>
+                        <radialGradient id="petal-grad-3" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#ff99ac" />
+                            <stop offset="100%" stopColor="#ff4d6d" />
+                        </radialGradient>
+                    </defs>
+                </svg>
+                {activePetals.map((p, idx) => {
+                    const grads = ["url(#petal-grad-1)", "url(#petal-grad-2)", "url(#petal-grad-3)"];
+                    const grad = grads[idx % 3];
+                    return (
+                        <div key={p.id} style={{
+                            position: 'absolute',
+                            left: p.x,
+                            top: p.y,
+                            width: p.size,
+                            height: p.size * 1.2,
+                            transform: `translate(-50%, -50%) rotate(${p.rotation}deg) scale(${p.life})`,
+                            opacity: p.opacity * p.life,
+                            filter: `blur(${p.blur})`,
+                            transition: 'none'
+                        }}>
+                            <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.3))' }}>
+                                <path d="M50 0C25 0 0 35 0 70C0 100 25 120 50 120C75 120 100 100 100 70C100 35 75 0 50 0Z"
+                                    fill={grad} />
+                                <path d="M50 5C30 10 15 40 15 70" stroke="rgba(255,255,255,0.2)" strokeWidth="2" strokeLinecap="round" />
+                            </svg>
+                        </div>
+                    );
+                })}
+            </div>
+
+        </div>
+    );
+}

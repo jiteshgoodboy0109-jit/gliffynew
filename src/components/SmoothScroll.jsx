@@ -4,18 +4,16 @@ import Lenis from 'lenis';
 const SmoothScroll = ({ children }) => {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.9,           // Snappy — no perceived lag
+      easing: (t) => 1 - Math.pow(1 - t, 3), // Cubic ease-out — fast start, gentle end
       orientation: 'vertical',
-      gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      smoothTouch: true,   // enable on mobile too
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.1,    // Slightly faster than native = no sluggishness
+      smoothTouch: false,      // OFF — native touch scroll is always faster on mobile
+      touchMultiplier: 1,
       infinite: false,
     });
 
-    // Expose globally so Services page can use it
     window.lenis = lenis;
 
     let rafId;

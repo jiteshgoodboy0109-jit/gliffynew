@@ -13,9 +13,9 @@ const Instagram = ({ size = 24, ...props }) => (
 );
 
 const dropdownOptions = [
-  { value: 'webdesign',      label: 'Web Design' },
-  { value: 'seo',            label: 'SEO' },
-  { value: 'couple site',    label: 'Couple Site' },
+  { value: 'webdesign', label: 'Web Design' },
+  { value: 'seo', label: 'SEO' },
+  { value: 'couple site', label: 'Couple Site' },
   { value: 'happy feedback', label: 'Happy Feedback' },
 ];
 
@@ -89,7 +89,7 @@ const WHATSAPP_NUMBER = '918220945226'; // Country code + number
 
 const Contact = () => {
   const [selectedService, setSelectedService] = useState('');
-  const [name, setName]       = useState('');
+  const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
 
@@ -100,7 +100,7 @@ const Contact = () => {
     const service = dropdownOptions.find(o => o.value === selectedService)?.label || selectedService || 'Not specified';
     const sep = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
     const text =
-`🎉 Woohoo! We've Received Your Message!
+      `🎉 Woohoo! We've Received Your Message!
 ${sep}
 👤 Name: ${name}
 💼 Service: ${service}
@@ -114,7 +114,7 @@ ${sep}
 ✨ Stay awesome. We're building something great together!`;
 
     const encoded = encodeURIComponent(text);
-    const waUrl   = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
 
     setSending(true);
     setTimeout(() => {
@@ -202,7 +202,7 @@ ${sep}
                 {sending ? (
                   <>Opening WhatsApp… <span className="btn-spinner" /></>
                 ) : (
-                  <>Send via WhatsApp <Send size={18} /></>
+                  <>Send <Send size={18} /></>
                 )}
               </motion.button>
             </form>
