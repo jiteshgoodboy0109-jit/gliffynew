@@ -255,89 +255,83 @@ export default function CouplePage() {
         await new Promise(r => setTimeout(r, 800));
         setFlameStatus('result');
 
-        // Poster Generation Logic (Keep as is)
+        // Poster Generation Logic
         setTimeout(() => {
             const svg = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
             <defs>
-              <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#05010a" />
-                <stop offset="35%" stop-color="#1a052e" />
-                <stop offset="100%" stop-color="#05010a" />
+              <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff4d6d" />
+                <stop offset="100%" stop-color="#c9184a" />
               </linearGradient>
-              <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#c77dff" />
-                <stop offset="100%" stop-color="#FF4D6D" />
-              </linearGradient>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="15" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-              <filter id="textGlow">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
+              <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000" flood-opacity="0.1"/>
               </filter>
             </defs>
             
-            <rect width="1080" height="1080" fill="url(#bg)"/>
+            <rect width="1080" height="1350" fill="#ffffff"/>
             
-            <!-- Floating Decorative Stars (Google/AI Style) -->
-            <circle cx="150" cy="150" r="2" fill="#fff" opacity="0.8"/>
-            <circle cx="930" cy="200" r="1.5" fill="#fff" opacity="0.6"/>
-            <circle cx="200" cy="880" r="2" fill="#fff" opacity="0.7"/>
-            <circle cx="850" cy="750" r="1" fill="#fff" opacity="0.5"/>
-            <circle cx="540" cy="540" r="300" fill="url(#textGrad)" opacity="0.03" filter="url(#glow)"/>
-            
-            <!-- Main Border -->
-            <rect x="50" y="50" width="980" height="980" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" rx="50"/>
-            <rect x="70" y="70" width="940" height="940" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" rx="40" stroke-dasharray="10 20"/>
+            <circle cx="1080" cy="0" r="300" fill="#fcfcfe" />
+            <circle cx="0" cy="1350" r="300" fill="#fcfcfe" />
 
             <!-- Header Branding -->
-            <g opacity="0.6">
-                <text x="540" y="120" font-family="Arial, sans-serif" font-size="20" fill="#fff" text-anchor="middle" letter-spacing="12" font-weight="900">GLIFFY.X STUDIO</text>
-                <line x1="480" y1="135" x2="600" y2="135" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <text x="540" y="120" font-family="serif" font-size="30" fill="#0a0000ff" text-anchor="middle" letter-spacing="12" font-weight="bold">A PERFECT RESULT BY GLIFFY.X💜</text>
+
+            <!-- First Name (Top) -->
+            <text x="540" y="350" font-family="serif" font-size="140" fill="#1a1a1a" text-anchor="middle" font-weight="bold" letter-spacing="-2">${bName}</text>
+            
+            <!-- PERFECT DOUBLE HEART CENTER -->
+            <g transform="translate(540, 700)" filter="url(#dropShadow)">
+                <!-- Symmetrical Base Heart Path -->
+                <symbol id="perfectHeart">
+                    <path d="M0 200 C-220 100, -320 -100, 0 -250 C320 -100, 220 100, 0 200" />
+                </symbol>
+
+                <!-- Back Heart (Right/Large) -->
+                <use href="#perfectHeart" transform="translate(60, 0) scale(0.9) rotate(5)" 
+                     fill="none" stroke="url(#roseGrad)" stroke-width="10" opacity="0.2" />
+                
+                <!-- Front Heart (Left/Styled) -->
+                <use href="#perfectHeart" transform="translate(-40, 10) scale(1.05) rotate(-5)" 
+                     fill="none" stroke="url(#roseGrad)" stroke-width="20" stroke-linecap="round" />
+                
+                <!-- Result Text perfectly centered -->
+                <text y="0" font-family="serif" font-size="130" fill="#ff4d6d" text-anchor="middle" font-weight="900" text-transform="uppercase" letter-spacing="5">${res}</text>
+                <text y="90" font-family="serif" font-size="70" fill="#1a1a1a" text-anchor="middle" opacity="0.8">${FLAMES_EMOJIS[res] || '🌹'}</text>
             </g>
 
-            <!-- Title Section -->
-            <text x="540" y="280" font-family="'Times New Roman', serif" font-size="45" fill="#fff" text-anchor="middle" font-style="italic" opacity="0.9">The Stars Have Spoken</text>
-            
-            <!-- Names Section (Tightened) -->
-            <text x="540" y="420" font-family="'Times New Roman', serif" font-size="120" fill="#fff" text-anchor="middle" font-weight="bold" filter="url(#textGlow)">${bName} &amp; ${gName}</text>
-            
-            <g transform="translate(540, 480)">
-                <path d="M-100 0 L100 0" stroke="url(#textGrad)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
-                <circle cx="0" cy="0" r="5" fill="#FF4D6D" filter="url(#textGlow)"/>
-            </g>
-            
-            <text x="540, 540" y="540" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="10" font-weight="bold">ARE DESTINED TO BE</text>
-            
-            <!-- Result Section (Tightened) -->
-            <text x="540" y="720" font-family="'Times New Roman', serif" font-size="180" fill="url(#textGrad)" text-anchor="middle" font-weight="bold" filter="url(#glow)" letter-spacing="5" text-transform="uppercase">${res}</text>
-            
-            <g transform="translate(540, 850) scale(1.5)">
-                <text font-size="80" text-anchor="middle" filter="url(#textGlow)">${FLAMES_EMOJIS[res] || '🌹'}</text>
-            </g>
-            
-            <!-- Footer Section -->
-            <g transform="translate(540, 1000)">
-                <text font-family="Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.3)" text-anchor="middle" letter-spacing="4">CERTIFIED BY THE COSMOS • GLIFFY.X STUDIO</text>
+            <!-- Second Name (Bottom) -->
+            <text x="540" y="1150" font-family="serif" font-size="140" fill="#1a1a1a" text-anchor="middle" font-weight="bold" letter-spacing="-2">${gName}</text>
+
+            <!-- Bottom Branding -->
+            <g transform="translate(540, 1280)">
+                <text font-family="serif" font-size="30" fill="#000000ff" text-anchor="middle" letter-spacing="6" font-weight="bold">CERTIFIED SOUL BOND • GLIFFY.X 💜</text>
             </g>
           </svg>
         `;
 
+            // Convert SVG to PNG for high-quality download
+            const img = new Image();
+            const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
 
-            const blob = new Blob([svg], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${bName}_${gName}_FLAMES.svg`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 1350;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const pngUrl = canvas.toDataURL('image/png');
+                const downloadLink = document.createElement('a');
+                downloadLink.href = pngUrl;
+                downloadLink.download = `${bName}_${gName}_FLAMES_Perfect.png`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
         }, 1000);
     }, [bName, gName, setN1Display, setN2Display, setFlameStatus, setLoadingText, setFlameResult]);
 
