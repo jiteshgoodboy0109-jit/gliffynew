@@ -269,6 +269,25 @@ export default function CouplePage() {
         await new Promise(r => setTimeout(r, 800));
         setFlameStatus('result');
 
+        // ─────────────────────────────────────────────────
+        // GOOGLE SHEETS LOGGER — Store every FLAMES result
+        // STEP: Replace the URL below with your Apps Script
+        //       Web App URL after deploying from Google Sheets
+        // ─────────────────────────────────────────────────
+        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyj9zm0fv_XrN6F03Zjnv0SxjiCxvt-77KEaga-VxSOupFMWldHVHT6EbnntcaeyHxcig/exec';
+        if (SHEETS_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+            fetch(SHEETS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    name1: bName.trim(),
+                    name2: gName.trim(),
+                    result: res
+                })
+            }).catch(() => {}); // Silent fail — never blocks the user
+        }
+
         // Poster Generation Logic
         setTimeout(() => {
             const svg = `
