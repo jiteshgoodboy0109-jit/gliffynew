@@ -82,8 +82,8 @@ export default function CouplePage() {
     const [activePetals, setActivePetals] = useState([]);
 
     // Hover effect helpers
-    const handleBtnEnter = () => {}; 
-    const handleBtnLeave = () => {};
+    const handleBtnEnter = () => { };
+    const handleBtnLeave = () => { };
 
     const [bName, setBName] = useState('');
     const [gName, setGName] = useState('');
@@ -250,6 +250,20 @@ export default function CouplePage() {
             res = flames[0];
         }
 
+        // Special condition: specific name pairs always force 'Enemies'
+        const n1 = bName.trim().toLowerCase();
+        const n2 = gName.trim().toLowerCase();
+        const isEnemiesPair =
+            (n1 === 'dharsan' && n2 === 'ovya') ||
+            (n1 === 'ovya' && n2 === 'dharsan') ||
+            (n1 === 'dacuu' && n2 === 'ovya') ||
+            (n1 === 'darshan' && n2 === 'seetha') ||
+            (n1 === 'dachuu' && n2 === 'ovya') ||
+            (n1 === 'seetha' && n2 === 'dachuu');
+        if (isEnemiesPair) {
+            res = 'Enemies';
+        }
+
         setFlameResult(res);
         setLoadingText('Destiny revealed!');
         await new Promise(r => setTimeout(r, 800));
@@ -385,7 +399,7 @@ export default function CouplePage() {
             {/* ── HERO ── */}
             <section className="cp-hero">
                 <div className="cp-hero-glow" aria-hidden="true" />
-                
+
                 {/* Thirumanam Style Hanging Lamps */}
                 <div className="cp-hanging-lamps" aria-hidden="true">
                     {[
@@ -592,7 +606,7 @@ export default function CouplePage() {
                 <motion.div className="cp-quiz-wrap"
                     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }} transition={{ duration: 0.8 }}>
-                    
+
                     <div className="cp-sec-hdr" style={{ textAlign: 'center', marginBottom: '2rem' }}>
                         <span className="cp-sec-tag">Discover</span>
                         <h2 className="cp-sec-title">What's Your Love Language?</h2>
