@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './Navbar.css';
-import logo from '../assets/logo 3.png';
+import logo from '../assets/logo 3.webp';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import logo from '../assets/logo 3.png';
+import logo from '../assets/logo 3.webp';
 import './Footer.css';
 import Strip from './Strip';
 

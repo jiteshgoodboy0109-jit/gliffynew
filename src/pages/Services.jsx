@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Monitor, Camera, Layers, Heart } from "lucide-react";
 import "./Services.css";
 
-import phoneImg from "../assets/phone.png";
-import laptopImg from "../assets/laptop.png";
+import phoneImg from "../assets/phone.webp";
+import laptopImg from "../assets/laptop.webp";
 
 const Service = () => {
   const roadmapRef = useRef(null);

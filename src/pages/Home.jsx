@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Search, Palette, Rocket } from 'lucide-react';
 
 import './Home.css';
-import heroImg from '../assets/glify model.png';
+import heroImg from '../assets/glify model.webp';
 
 const Home = () => {
   const steps = [
