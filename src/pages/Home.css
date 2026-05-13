@@ -169,7 +169,7 @@
   .hero {
     height: auto;
     padding: 0;
-    margin-top: 80px; /* Reduced space */
+    margin-top: 0; /* Remove white gap */
     background: var(--hero-bg);
   }
 
