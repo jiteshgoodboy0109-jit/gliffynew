@@ -33,7 +33,7 @@ const Home = () => {
           <div className="hero-image">
             <motion.img
               src={heroImg}
-              alt="Digital Design Studio"
+              alt="Gliffy Digital Design Studio"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}

@@ -78,7 +78,7 @@ const Service = () => {
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img src={phoneImg} alt="phone" className="phone-mockup" />
+            <img src={phoneImg} alt="Gliffy Mobile Web Design Mockup" className="phone-mockup" />
           </motion.div>
 
           {/* CENTER CONTENT */}
@@ -114,7 +114,7 @@ const Service = () => {
             animate={{ y: [0, -25, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           >
-            <img src={laptopImg} alt="laptop" className="laptop-mockup" />
+            <img src={laptopImg} alt="Gliffy Responsive Desktop Design Mockup" className="laptop-mockup" />
           </motion.div>
         </div>
       </section>

@@ -11,6 +11,7 @@ import './App.css';
 import SmoothScroll from './components/SmoothScroll';
 import ScrollToTop from './components/ScrollToTop';
 import Couple from './pages/Couple';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
               <Route path="/freelancers" element={<Home />} />
               <Route path="/insights" element={<Home />} />
               <Route path="/login" element={<Contact />} />
+              {/* 404 Catch-all */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
