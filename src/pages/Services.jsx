@@ -63,7 +63,8 @@ const Service = () => {
         "Sorry Webpages: Cuteness overloaded designs to melt any heart."
       ],
       icon: <Heart size={40} />,
-      side: "right"
+      side: "right",
+      path: "/couple"
     }
   ];
 
@@ -195,23 +196,45 @@ const Service = () => {
                     />
                   </div>
 
-                  <div className="roadmap-card">
-                    <div className="roadmap-icon">{item.icon}</div>
-                    <div className="roadmap-content">
-                      <h3>{item.title}</h3>
-                      <p>{item.desc}</p>
-                      {item.bullets && (
-                        <ul className="roadmap-bullets">
-                          {item.bullets.map((bullet, idx) => (
-                            <li key={idx}>
-                              <Heart size={14} className="bullet-icon" /> {bullet}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                  {item.path ? (
+                    <Link to={item.path} className="roadmap-card-link">
+                      <div className="roadmap-card">
+                        <div className="roadmap-icon">{item.icon}</div>
+                        <div className="roadmap-content">
+                          <h3>{item.title}</h3>
+                          <p>{item.desc}</p>
+                          {item.bullets && (
+                            <ul className="roadmap-bullets">
+                              {item.bullets.map((bullet, idx) => (
+                                <li key={idx}>
+                                  <Heart size={14} className="bullet-icon" /> {bullet}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div className="roadmap-dot"></div>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className="roadmap-card">
+                      <div className="roadmap-icon">{item.icon}</div>
+                      <div className="roadmap-content">
+                        <h3>{item.title}</h3>
+                        <p>{item.desc}</p>
+                        {item.bullets && (
+                          <ul className="roadmap-bullets">
+                            {item.bullets.map((bullet, idx) => (
+                              <li key={idx}>
+                                <Heart size={14} className="bullet-icon" /> {bullet}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                      <div className="roadmap-dot"></div>
                     </div>
-                    <div className="roadmap-dot"></div>
-                  </div>
+                  )}
                 </motion.div>
               );
             })}

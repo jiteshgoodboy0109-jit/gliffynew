@@ -160,6 +160,14 @@
   border-color: rgba(0, 0, 0, 0.1);
 }
 
+.roadmap-card-link {
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  color: inherit;
+  cursor: pointer;
+}
+
 .roadmap-icon {
   width: 70px;
   height: 70px;
@@ -323,35 +331,47 @@
 }
 
 @media (max-width: 768px) {
+  .service-hero {
+    padding: 60px 20px;
+    min-height: auto; /* Allow content to dictate height on mobile */
+  }
+
   .service-container {
     flex-direction: column;
     text-align: center;
-    gap: 40px;
-  }
-
-  .service-image-side {
-    width: 60%;
-    /* Larger for mobile visibility */
-    order: 2;
-    /* Put images below text */
+    gap: 20px; /* Reduced from 40px */
   }
 
   .service-text {
     order: 1;
     padding: 0;
+    margin-bottom: 20px;
   }
 
   .service-text h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+
+  .service-text p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .service-image-side {
+    width: 80%; /* Slightly wider for better impact */
+    max-width: 300px;
+    order: 2;
   }
 
   .service-image-side:last-child {
     order: 3;
+    margin-top: -20px; /* Pull laptop closer to phone */
   }
 
   .phone-mockup,
   .laptop-mockup {
-    max-width: 250px;
+    max-width: 100%;
   }
 
   .roadmap-svg-ink {
